@@ -1,0 +1,63 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Multi-Auth API",
+    "version": "1.0.0",
+    "description": "An API that supports multiple authentication mechanisms."
+  },
+  "paths": {
+    "/example-endpoint": {
+      "get": {
+        "summary": "Get example data",
+        "description": "Example endpoint that requires authentication.",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          { "OAuth2": [] },
+          { "ApiKeyAuth": [] },
+          { "BearerAuth": [] }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "OAuth2": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://auth.example.com/oauth2/authorize",
+            "tokenUrl": "https://auth.example.com/oauth2/token",
+            "scopes": {
+              "read": "Read access to protected resources",
+              "write": "Write access to protected resources"
+            }
+          }
+        }
+      },
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key",
+        "description": "API key needed to access the endpoint."
+      },
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "JWT token for bearer authentication."
+      }
+    }
+  },
+  "security": [
+    { "OAuth2": ["read", "write"] },
+    { "ApiKeyAuth": [] },
+    { "BearerAuth": [] }
+  ]
+}
