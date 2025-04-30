@@ -1,0 +1,49 @@
+Functional Test Cases:
+
+1. Verify Default State:
+   - Input: Open and inspect application environment variable settings
+   - Expected Output: VERIFY_TEST value should be false by default
+
+2. Verify Manual Change:
+   - Input: Manually change VERIFY_TEST from false to true
+   - Expected Output: VERIFY_TEST value presentation should update from false to true
+
+3. Verify No Variable Duplication:
+   - Input: Introduce an envVar that is already a part of CLI Env values
+   - Expected Output: The introduction of duplicate variable should be disallowed
+
+4. Verify Variable Append:
+   - Input: Change value of VERIFY_TEST to true again
+   - Expected Output: Application should not append a new variable rather it should overwrite the old one
+
+5. Verify Removal:
+   - Input: Try to remove VERIFY_TEST variable
+   - Expected Output: VERIFY_TEST variable should be removed successfully
+
+Non-Functional Test Cases:
+
+1. Error Handling:
+   - Input: Insert an invalid value for VERIFY_TEST
+   - Expected Output: Application should handle error and user should be notified with appropriate error message
+
+2. Performance Test:
+   - Input: Continuously change VERIFY_TEST value multiple times
+   - Expected Output: There should be no significant delay in changing value
+
+3. Security Test:
+   - Input: Attempt to access or alter VERIFY_TEST key when unauthorized
+   - Expected Output: Unauthorized actions should be prevented
+
+4. Usability Test:
+   - Input: Navigate to environment setting tab
+   - Expected Output: UI should be intuitive and easy to navigate
+
+5. Compatibility Test:
+   - Input: Open application on different browsers and devices
+   - Expected Output: Environment variable settings should work perfectly regardless of browser or device type
+
+Edge Case:
+
+1. Case with Empty Input:
+   - Input: Try to set VERIFY_TEST with empty or only whitespace
+   - Expected Output: Appropriate error message should be shown, and VERIFY_TEST should not be set to empty or whitespace-only value
