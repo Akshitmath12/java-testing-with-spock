@@ -1,0 +1,103 @@
+# Test Scenarios for [ZBIO-6159] RoostGPT - Upload Jira Ticket as PDF for Functional Test
+
+## **Functional Test Cases**
+
+### **1. Verify Uploading a PDF File**
+   - **Input Values**: Upload a valid PDF file named `jira_ticket.pdf` from the **approostio** interface.
+   - **Expected Output**: 
+     - File gets uploaded successfully.
+     - File metadata (file name, content, and prompt type) is sent as an array of objects to **roost-reg**. 
+     - File path is stored in **roost-reg**.
+     - Content and file name are sent to the **AI server** for processing.
+   - **Edge Case**: Uploading a non-PDF file should result in an error (covered in scenario 2).
+
+### **2. Validate Supported Document Types**
+   - **Input Values**: Upload files of different formats (e.g., `.pdf`, `.docx`, `.jpg`).
+   - **Expected Output**:
+     - Only `.pdf` files are successfully uploaded.
+     - For unsupported file formats, display an appropriate error message, e.g., "Only PDF files are supported."
+   - **Edge Case**: An empty or invalid file upload should result in "File is required" or "Invalid file." 
+
+### **3. Verify Handling of Large PDF Files**
+   - **Input Values**: Upload a large PDF file (e.g., 20 MB).
+   - **Expected Output**:
+     - The system processes the file without crashing.
+     - If size exceeds supported limits, show an error message such as "File size exceeds the maximum limit."
+
+### **4. Verify Regex-Based Information Extraction from PDF**
+   - **Input Values**: Upload a Jira ticket PDF with typical structure, including title, description, and comments.
+   - **Expected Output**:
+     - Regex correctly identifies and extracts title, description, and comments.
+     - Extracted information is sent to the AI server in the required format.
+   - **Edge Case**: 
+     - Handle files with incomplete or non-standard content gracefully.
+
+### **5. Verify Integration Between Modules**
+   - **Input Values**: Upload a valid PDF file.
+   - **Expected Output**:
+     - Data ownership is handed off correctly from **approostio** -> **roost-reg** -> **aiServer** -> **NodeJS**.
+     - Verify that the AI server receives the correct file content, file name, and extracted metadata.
+     - Cross-check string of file paths at the AI server.
+
+### **6. Validate Error Handling on Malformed PDF**
+   - **Input Values**: Upload a corrupt PDF file (e.g., unreadable content).
+   - **Expected Output**:
+     - System displays "Error reading the PDF file" and logs an error.
+     - AI server should not receive incomplete or corrupt data.
+
+### **7. Verify Duplicate File Upload**
+   - **Input Values**: Upload the same PDF file multiple times in a single session.
+   - **Expected Output**:
+     - File names are appended with unique identifiers (e.g., `jira_ticket_1.pdf`, `jira_ticket_2.pdf`).
+     - System should allow duplications only if required; otherwise, display a warning like "File already uploaded."
+
+---
+
+## **Non-Functional Test Cases**
+
+### **1. Validate Performance of File Upload**
+   - **Scenario**: Measure the file upload time for PDFs of various sizes (e.g., 1 MB, 5 MB, 10 MB).
+   - **Expected Output**:
+     - File uploads should complete within a maximum of 5 seconds for files up to 10 MB.
+     - Degradation for larger files should not impact system stability.
+
+### **2. Verify System Response During High Load**
+   - **Scenario**: Simultaneously upload 50 PDF files across multiple user sessions.
+   - **Expected Output**:
+     - The system should handle concurrent uploads without crashing or degrading performance.
+
+### **3. Verify Security of Uploaded Files**
+   - **Scenario**: Upload a PDF containing sensitive information.
+   - **Expected Output**:
+     - Files are securely transmitted via HTTPS.
+     - File paths and contents are securely stored at each stage.
+
+### **4. Validate Failure Recovery**
+   - **Scenario**: Simulate a server-side failure while uploading a file.
+   - **Expected Output**:
+     - The system retries or displays appropriate "Upload failed. Please try again" error message.
+     - Partial uploads are cleaned up.
+
+### **5. Measure AI Server Processing Time**
+   - **Scenario**: Test how long the AI server takes to process a parsed PDF file.
+   - **Expected Output**:
+     - AI server should process file content and return a response within 3 seconds.
+
+### **6. Validate Regex Efficiency**
+   - **Scenario**: Extract data from a PDF with 500+ lines of text using regex.
+   - **Expected Output**:
+     - Extraction should complete within 2 seconds without CPU-intensive operations.
+
+### **7. Verify Cross-Browser Compatibility**
+   - **Scenario**: Test the PDF upload feature across popular browsers (Chrome, Firefox, Safari, Edge).
+   - **Expected Output**:
+     - The functionality must work consistently across all browsers without UI/UX discrepancies.
+
+### **8. Validate File Deletion Policy**
+   - **Scenario**: Check if temporary files stored in **roost-reg** are deleted after processing.
+   - **Expected Output**:
+     - No unnecessary or leftover files remain after successful processing.
+
+---
+
+This comprehensive plan ensures the feature is thoroughly validated across functional capabilities, edge cases, and non-functional aspects like performance, security, and scalability.
