@@ -1,0 +1,13 @@
+Upload a valid PDF file through approostio
+Reject non-PDF file upload
+Store file details in roost-reg database
+Handle duplicate file names in roost-reg
+Forward file to AI server
+Reject incomplete or corrupt PDF file
+Parse PDF using regex in AI server
+Fail parsing due to blank PDF file
+Handle non-standard text patterns during parsing
+AI processing of parsed content
+Handle edge case descriptions during AI processing
+Validate end-to-end flow from approostio to Roost-reg to AI server
+Handle failure scenarios gracefully during end-to-end flow
