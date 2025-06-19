@@ -1,0 +1,122 @@
+# Test Scenarios for [ZBIO-6159] Roostgpt change for upload of Jira ticket as pdf for functional Test
+
+---
+
+## **Functional Test Cases**
+
+### **1. Upload Jira PDF file through approostio**
+- **Input**: Upload a valid `jira.pdf` file with `fileName`, `content`, and `promptType` sent as an array of objects.
+- **Expected Output**: PDF file is successfully uploaded, and the `fileName` and `promptType` are stored in roost-reg.
+- **Edge Case**: Test with a file that’s not a PDF, like `.docx` or `.xls`. Expected output: System should reject non-PDF files with an appropriate error message.
+
+---
+
+### **2. Store file details in roost-reg**
+- **Input**: Send the uploaded `jira.pdf` and its metadata (`fileName`, `promptType`) to roost-reg for storage.
+- **Expected Output**: File path, `fileName`, and `promptType` are accurately stored in the database.
+- **Edge Case**: Check for duplicate file names. Expected output: System should handle duplicates gracefully, either by renaming or rejecting the upload with a prompt.
+
+---
+
+### **3. Forward file to AI server**
+- **Input**: `FileContent` and `fileName` fetched from roost-reg are sent to the AI server.
+- **Expected Output**: AI server receives the file as a `string` of file paths and successfully retrieves its content.
+- **Edge Case**: Test with an incomplete file (e.g., a corrupt PDF). Expected output: AI server should reject and log this as an error.
+
+---
+
+### **4. Parse PDF using regex in AI server**
+- **Input**: A valid `jira.pdf` containing structured data with `Description`, `Title`, and `Comments`.
+- **Expected Output**: AI server extracts details like `Description`, `Title`, and `Comments` using the regex-based approach accurately.
+- **Edge Case 1**: Test with a blank PDF. Expected output: Parsing should fail with an appropriate error message indicating the lack of content.
+- **Edge Case 2**: Test with non-standard text patterns that do not conform to expected formats. Expected output: Parsing invalid data returns a failure response.
+
+---
+
+### **5. AI processing of parsed content**
+- **Input**: Parsed details like `Description`, `Title`, and `Comments` are sent internally to the AI for further processing.
+- **Expected Output**: AI receives parsed details and processes them without any loss or corruption.
+- **Edge Case**: Test with edge case descriptions (e.g., empty titles, long comments, or malformed descriptions). The system should successfully handle such cases with meaningful messages or outputs.
+
+---
+
+### **6. End-to-End Flow Validation**
+- **Input**: Start from approostio file upload, flow through roost-reg, and complete at the AI server with a valid Jira ticket PDF file.
+- **Expected Output**: The PDF file is uploaded successfully, details are stored in the roost-reg database, parsed by the AI server using regex, and further processed without any interruption.
+- **Edge Case**: Simulate system failures (e.g., downtime in AI server or missing roost-reg file paths). The system should recover gracefully, logging necessary errors and retrying or prompting the user.
+
+---
+
+## **Non-Functional Test Cases**
+
+### **1. Performance Test for File Upload**
+- **Objective**: Measure the time taken to upload a Jira PDF file from approostio to roost-reg.
+- **Input**: Upload multiple files (e.g., 1 MB, 5 MB, 10 MB).
+- **Expected Output**: Files should upload within the acceptable time frame (e.g., <3 seconds for 1 MB).
+
+---
+
+### **2. Scalability Test for Multiple Parallel Uploads**
+- **Objective**: Evaluate how the system handles multiple users uploading Jira PDFs simultaneously.
+- **Input**: Simulate 50, 100, and 200 concurrent file uploads.
+- **Expected Output**: System performance is stable, with no failures under load.
+
+---
+
+### **3. Security Test for File Upload**
+- **Objective**: Ensure the system only accepts legitimate uploads and prevents malicious files.
+- **Input**: Upload files containing malicious scripts or incorrect MIME types disguised as PDFs.
+- **Expected Output**: The system rejects malicious files with an appropriate error or warning.
+
+---
+
+### **4. Regex Accuracy Test for Parsing**
+- **Objective**: Validate if the regex-based approach can handle multiple Jira PDF formats.
+- **Input**: Provide Jira PDFs with variations in structure/layout.
+- **Expected Output**: Regex accurately extracts the `Description`, `Title`, and `Comments` or gracefully handles unexpected variations without failing.
+
+---
+
+### **5. Reliability Test for File Path Retrieval in AI server**
+- **Objective**: Ensure consistent retrieval of file content using file paths in AI server.
+- **Input**: Simulate frequent fetch attempts for the same file path.
+- **Expected Output**: All fetch attempts return the correct content without errors or delays.
+
+---
+
+### **6. Usability Test for Error Logging**
+- **Objective**: Evaluate the clarity of error logs for manual debugging or future enhancements.
+- **Input**: Simulate various failures (e.g., corrupt PDF, regex mismatch, missing file path).
+- **Expected Output**: Logs should clearly indicate the source of failure, making it easy for engineers or support staff to resolve.
+
+---
+
+### **7. Compliance with File Standards**
+- **Objective**: Ensure the system works with files adhering to industry-standard PDF norms.
+- **Input**: Test with password-protected, scanned image-based, and multi-layered PDFs.
+- **Expected Output**: Password-protected PDFs are rejected with a prompt. Text-based PDFs are processed seamlessly, while scanned-image PDFs may surface appropriate warnings.
+
+---
+
+### **8. Stress Test for File Size**
+- **Objective**: Test the upper limit of files the system can support.
+- **Input**: Provide unusually large PDF files (e.g., 100 MB or more).
+- **Expected Output**: System processes large PDFs without crashing but logs or restricts files exceeding a predefined limit (e.g., 50 MB).
+
+---
+
+### **9. Response Time Test for Regex Parsing**
+- **Objective**: Measure time taken by the AI server to parse a Jira PDF.
+- **Input**: Provide PDFs of varying sizes (small, medium, and large).
+- **Expected Output**: Parsing time is within acceptable limits, e.g., <1 second for small PDFs, <3 seconds for medium PDFs, and <5 seconds for large PDFs.
+
+---
+
+### **10. Endurance Test for End-to-End Activity**
+- **Objective**: Test how robust the system is during continuous operations.
+- **Input**: Simulate hundreds of consecutive uploads and parsing requests over extended periods (e.g., 24 hours).
+- **Expected Output**: System maintains consistent performance and accuracy without degradation over time.
+
+--- 
+
+**Note**: All test cases should be executed in development, staging, and production environments to ensure full coverage. Automated regression tests should also be created for repetitive scenarios.
