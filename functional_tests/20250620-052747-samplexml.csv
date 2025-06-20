@@ -1,0 +1,12 @@
+Validate upload of a supported file type (PDF)
+Reject upload of unsupported file types
+Reject upload of a file exceeding the size limit
+Reject upload of empty files
+Store file details in "roost-reg"
+Transmit file data to AI Server
+Parse Jira ticket details from the PDF
+Handle concurrent uploads of multiple files
+Handle complex PDF structure for parsing
+Prevent unauthorized access to "roost-reg"
+Validate performance for bulk file uploads
+Validate new functional test upload option for usability
