@@ -1,0 +1,81 @@
+### Test Scenarios for User Story: [ZBIO-6545] Add claude-3-7-sonnet Anthropic Model in Google Vertex AI  
+
+#### **Functional Test Scenarios:**
+
+- **Test Case 1: Verify dropdown contains the new "claude-3-7-sonnet" model**
+  - **Input:** Navigate to the relevant section of the Google Vertex AI interface where the Anthropic model dropdown is displayed.  
+  - **Expected Output:** The dropdown should include "claude-3-7-sonnet" as an available selection.  
+  - **Edge Case:** Validate the behavior when the dropdown contains many items (e.g., 50+ models). The new model should still be visible and selectable.
+
+- **Test Case 2: Validate selection of "claude-3-7-sonnet" in the dropdown**
+  - **Input:** Select "claude-3-7-sonnet" from the dropdown and confirm the selection.  
+  - **Expected Output:** The system should correctly process the selection and display confirmation without errors.  
+
+- **Test Case 3: Ensure proper model validation occurs**
+  - **Input:** Select "claude-3-7-sonnet" as the model and initiate a request via the API after form submission.  
+  - **Expected Output:** The model should successfully pass all internal validations.  
+
+- **Test Case 4: API response with 200 OK for valid requests**
+  - **Input:** Send a valid request using "claude-3-7-sonnet" as the selected model.  
+  - **Expected Output:** API responds with a 200 OK status and a valid JSON response confirming model execution.  
+
+- **Test Case 5: API response with 429 Too Many Requests error**
+  - **Input:** Simulate a high number of API requests to trigger rate-limiting (e.g., send more than 20 requests per minute).  
+  - **Expected Output:** API responds with a 429 "Too Many Requests" error containing the following details:
+    ```json
+    {
+        "error": {
+            "code": 429,
+            "message": "Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details.",
+            "status": "RESOURCE_EXHAUSTED"
+        }
+    }
+    ```
+
+- **Test Case 6: Validate retry mechanism after 429 error**
+  - **Input:** After receiving a 429 error, retry the API request after the cooldown period.  
+  - **Expected Output:** Following the retry, the API should return a 200 OK response if the retry happens after the cooldown period.  
+
+- **Test Case 7: Handle invalid input for the model API**
+  - **Input:** Use "invalid-model-name" instead of "claude-3-7-sonnet" for the API request.  
+  - **Expected Output:** Error response with the appropriate error code (e.g., 400 Bad Request) and a descriptive error message.  
+
+---
+
+#### **Non-Functional Test Scenarios:**
+
+- **Test Case 1: Performance testing of the dropdown rendering**
+  - **Input:** Load the dropdown with a large number of options (e.g., 100+ items).  
+  - **Expected Output:** The dropdown should render within 2 seconds without degraded performance.  
+
+- **Test Case 2: API rate-limiting behavior under load**
+  - **Input:** Simulate concurrent API requests (e.g., 50+ requests per second) using "claude-3-7-sonnet."  
+  - **Expected Output:** The system should correctly enforce rate-limiting rules (e.g., return 429 errors for excess requests) without system crashes.  
+
+- **Test Case 3: Availability and reliability of the service**
+  - **Input:** Test the "claude-3-7-sonnet" model functionality during peak usage times.  
+  - **Expected Output:** The system should maintain >99% availability and <1% error rate during peak traffic.  
+
+- **Test Case 4: Scalability testing**
+  - **Input:** Increase system load incrementally to evaluate behavior under high usage scenarios (e.g., up to 10k requests/hour).  
+  - **Expected Output:** The system should scale seamlessly without impacting response time or result accuracy for the "claude-3-7-sonnet" model.  
+
+- **Test Case 5: Ensuring error message clarity**
+  - **Input:** Trigger a variety of errors (e.g., 429, 400, etc.) by simulating edge cases.  
+  - **Expected Output:** All error messages should be clear, user-friendly, and provide actionable steps or references (e.g., links to relevant documentation).  
+
+- **Test Case 6: Browser compatibility**
+  - **Input:** Open the dropdown and interact with the "claude-3-7-sonnet" model selection using various browsers (e.g., Chrome, Firefox, Edge, Safari).  
+  - **Expected Output:** The selection and associated API requests should work seamlessly across all supported browsers.  
+
+- **Test Case 7: Stress test retry mechanism**
+  - **Input:** Simulate retries from multiple clients simultaneously after sending rate-limited requests.  
+  - **Expected Output:** The retry mechanism should handle the load gracefully without system crashes or additional cascading errors.  
+
+---
+
+### Key Considerations:
+- Ensure thorough documentation of intermittent 429 errors in test evidence and provide detailed logs to reproduce.  
+- Collaborate with backend and infrastructure teams if rate-limiting behavior needs adjustment for better success rates.  
+- Use tools like JMeter or LoadRunner for non-functional testing (e.g., scalability, rate-limiting).  
+

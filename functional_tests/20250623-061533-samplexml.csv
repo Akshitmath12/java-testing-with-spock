@@ -1,0 +1,15 @@
+Upload a valid PDF file
+Upload a large, valid PDF file
+Handle special characters in PDF content
+Provide an option to upload PDF instead of linking from Jira/Azure
+Attempt to upload without selecting a file
+Validate unsupported file types
+Handle invalid PDF with correct extension
+Store file metadata in Roost-reg module
+AI server fetching content from Roost-reg
+Regex-based data extraction for valid PDFs
+Handle PDFs with empty fields
+Parse non-standard PDF structures
+Performance of uploading large files
+Server concurrency for multiple files
+Security validation for malicious files
