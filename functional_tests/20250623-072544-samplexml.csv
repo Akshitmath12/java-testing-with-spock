@@ -1,0 +1,13 @@
+Verify the addition of "claude-3-7-sonnet" model in the dropdown
+Verify model selection functionality
+Validate that an unsupported model cannot be selected
+Ensure successful response for a valid API request
+Validate handling of "429 Too Many Requests" error
+Validate retry mechanism on receiving a 429 error
+Validate dropdown behavior when no models are available
+Test response with corrupted model data
+Measure system response time for model dropdown rendering
+Test system behavior under high API traffic
+User interface clarity for selecting "claude-3-7-sonnet"
+Ensure stability of "claude-3-7-sonnet" selection under continuous usage
+Validate stability at peak resource usage
