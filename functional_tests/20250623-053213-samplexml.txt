@@ -1,0 +1,85 @@
+# Test Scenarios for User Story: [ZBIO-6159] Roostgpt Change for Upload Jira Ticket as PDF for Functional Test
+
+---
+
+## **Functional Test Cases**
+
+### Test Case 1: Upload supported PDF files in Functional Testing  
+- **Input**: Upload a valid Jira ticket as a PDF file (`jira.pdf`) through the functional testing interface.  
+- **Expected Output**: The PDF is successfully uploaded, stored, and processed correctly, extracting title, description, and comments using regex.  
+- **Edge cases**:  
+  - Upload a larger PDF file with lengthy comments but valid structure.  
+  - Upload a PDF file containing special characters in the title or description fields.  
+
+### Test Case 2: Option to upload PDF as an alternative to linking Jira/Azure DevOps  
+- **Input**: Choose to upload a PDF instead of linking an issue from Jira/Azure DevOps and upload a valid Jira ticket.  
+- **Expected Output**: The "Upload PDF" option is available and functions seamlessly to process the file. Linking options to Jira/Azure remain unaffected and functional.  
+- **Edge cases**:  
+  - Select "Upload PDF" and attempt no upload—error message should display.  
+
+### Test Case 3: Parsing PDF file content for details extraction  
+- **Input**: A PDF file is uploaded with valid information like title, description, and comment fields structured correctly.  
+- **Expected Output**: Regex implementation correctly extracts title, description, and comments from the file content.  
+- **Edge cases**:  
+  - Upload a valid Jira ticket PDF containing empty description or comments fields.  
+  - Parse PDF with unexpected formatting issues such as missing titles or non-standard order of elements.   
+
+### Test Case 4: Validation for unsupported file types  
+- **Input**: Attempt to upload unsupported file types such as `.docx`, `.xlsx`, `.txt`, or invalid PDFs.  
+- **Expected Output**: System displays an error message specifying unsupported file types ("Only PDF files are accepted for upload").  
+- **Edge cases**:  
+  - Upload files with an incorrect extension (`.pdf`) but invalid content.  
+
+### Test Case 5: FilePath and metadata storage in Roost-reg module  
+- **Input**: Upload a Jira ticket PDF (`jira.pdf`); verify that file paths, file names, and prompt types are correctly stored in the database.  
+- **Expected Output**: Roost-reg module successfully saves the file path, file name, and prompt type, and returns a confirmation.  
+- **Edge cases**:  
+  - Verify system behavior when roost-reg module experiences storage failure or file path duplication.  
+
+### Test Case 6: AI server fetching content from Roost-reg  
+- **Input**: Uploaded file's metadata (file paths, file names, and prompt types) is sent to the AI server from Roost-reg.  
+- **Expected Output**: AI server successfully processes array of objects with provided details and fetches content and metadata accurately.  
+- **Edge cases**:  
+  - AI server receives missing or corrupted metadata; it should handle this gracefully without crashing.  
+
+### Test Case 7: Regex-based extraction for various PDF structures  
+- **Input**: Jira ticket PDF variations (e.g., titles or descriptions spanning multiple lines, comments list, headings mismatch).  
+- **Expected Output**: Regex implementation handles all variations gracefully and extracts correct data.  
+- **Edge cases**:  
+  - PDF does not follow typical Jira structure; appropriate error or fallback is displayed.  
+
+---
+
+## **Non-Functional Test Cases**
+
+### Test Case 1: Performance of upload functionality  
+- **Scenario**: Upload a large PDF file (e.g., 50 MB) to test system performance.  
+- **Expected Output**: System processes and stores the file under 5 seconds without degradation in quality.  
+
+### Test Case 2: Scalability of AI server parsing multiple files  
+- **Scenario**: AI server processes multiple concurrent requests for extracting data from several uploaded Jira ticket PDFs.  
+- **Expected Output**: System accurately parses all files and maintains performance without crashing.  
+
+### Test Case 3: File path storage integrity  
+- **Scenario**: Verify file paths stored in the Roost-reg module remain accessible and unchanged during system load or updates.  
+- **Expected Output**: File paths remain intact without any loss or mismatch.  
+
+### Test Case 4: Security validation of uploaded files  
+- **Scenario**: Attempt to upload a malicious or corrupted PDF file.  
+- **Expected Output**: System detects risks and prevents file upload. Any potential injection or exploit within a PDF file is effectively blocked.  
+
+### Test Case 5: Regex efficiency and accuracy  
+- **Scenario**: Evaluate the regex-based approach under complex text patterns in PDFs and ensure no visible latency in parsing large documents.  
+- **Expected Output**: Regex operations complete within milliseconds and extract all necessary details accurately.  
+
+### Test Case 6: User interface responsiveness  
+- **Scenario**: Test the "Upload PDF" button across different screen resolutions and browsers.  
+- **Expected Output**: Button displays correctly and remains responsive without breaking the UI/UX.  
+
+### Test Case 7: Error handling and resilience  
+- **Scenario**: Validate behavior when a PDF with unsupported structure or missing fields is uploaded.  
+- **Expected Output**: System handles the error gracefully, alerting the user without crashing or freezing.  
+
+---
+
+These scenarios cover key functionalities and non-functional aspects relevant to the uploading and processing of Jira tickets as PDFs for functional testing. The edge cases ensure robustness, while performance and security tests ensure stability.
