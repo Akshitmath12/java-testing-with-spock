@@ -1,0 +1,73 @@
+## Test Scenarios for User Story: [ZBIO-6545] Add claude-3-7-sonnet Anthropic Model in Google Vertex AI
+
+### Functional Test Scenarios
+
+#### Scenario 1: Verify successful integration of claude-3-7-sonnet model
+- **Input Values:** Appropriate APIs to integrate with the claude-3-7-sonnet Anthropic Model.
+- **Expected Output:** The model is successfully listed and visible in the Google Vertex AI interface.
+- **Edge Cases:** Ensure proper handling if the Anthropic model is already listed, preventing duplication.
+
+#### Scenario 2: Validate accessible functionalities of the claude-3-7-sonnet model
+- **Input Values:** Use of various features or methods provided by the claude-3-7-sonnet model.
+- **Expected Output:** The model performs operations correctly without errors (e.g., natural language tasks, summarizations, sentiment analysis).
+- **Edge Cases:** Test scenarios where features may be used in unexpected combinations or edge cases in inputs, such as non-standard text inputs or large datasets.
+
+#### Scenario 3: Ensure compatibility between claude-3-7-sonnet model and Vertex AI pipelines
+- **Input Values:** Build a sample AI pipeline using the model and other dependent resources (e.g., datasets or tools inside Vertex AI).
+- **Expected Output:** The pipeline executes successfully without model-related compatibility issues.
+- **Edge Cases:** Verify behavior when the pipeline incorporates conflicting configurations (e.g., incorrect model version settings).
+
+#### Scenario 4: Validate that the claude-3-7-sonnet model follows security concerns
+- **Input Values:** Provide sensitive data through an input for testing potential vulnerabilities.
+- **Expected Output:** The model adheres to Google's security protocol, ensuring data protection without exposing sensitive data.
+- **Edge Cases:** Direct malformed inputs or malformed API requests should be gracefully rejected without exposing vulnerabilities.
+
+#### Scenario 5: Test model integration error scenarios
+- **Input Values:** Trigger manual integration failure (e.g., incorrect model download, wrong Vertex AI credentials).
+- **Expected Output:** System provides meaningful error messages and instructions to mitigate issues.
+- **Edge Cases:** Ensure that incorrect setup paths are always retraceable with logs/system error messages.
+
+#### Scenario 6: Integration with Google IAM
+- **Input Values:** Assign various IAM roles to test whether permissions allow/deny access to the claude-3-7-sonnet model effectively.
+- **Expected Output:** Access control is properly managed. Only approved roles should perform model-related tasks.
+- **Edge Cases:** Test unauthorized role access attempts and verify they are blocked gracefully.
+
+---
+
+### Non-Functional Test Scenarios
+
+#### Scenario 1: Performance Validation
+- **Input Values:** Provide large datasets or multiple concurrent API calls invoking the model's functionalities.
+- **Expected Output:** The model handles processing within acceptable time limits. No slowdown or system crashes should occur.
+- **Edge Cases:** Stress test to see system behavior under maximum allowable dataset size and concurrent calls.
+
+#### Scenario 2: Scalability Testing
+- **Input Values:** Gradually increase the number of models deployed and their associated APIs usage in Vertex AI.
+- **Expected Output:** The system/AI pipelines continue functioning without lag or degradation in performance, even under increased workload.
+- **Edge Cases:** Test extreme scalability limits specific to Vertex AI infrastructure to uncover resource contention issues.
+
+#### Scenario 3: Usability Testing
+- **Input Values:** Test interaction flow and documentation for deploying and running the claude-3-7-sonnet model.
+- **Expected Output:** The integration guide for the model is easy to understand and helps users set up securely and quickly.
+- **Edge Cases:** Verify navigation or documentation usability for new users unfamiliar with Google Vertex AI.
+
+#### Scenario 4: Reliability and uptime testing
+- **Input Values:** Run the model operations continuously over a prolonged period.
+- **Expected Output:** No unexpected system failures or errors during weeks-long operation. Logs display high reliability metrics.
+- **Edge Cases:** Ensure behaviors under sporadic network failures or high latency and data packet loss scenarios.
+
+#### Scenario 5: Compliance Testing
+- **Input Values:** Test compliance with Anthropic AI’s terms and conditions as well as Google’s AI/ML policies.
+- **Expected Output:** No violation of signed policies should occur. Proper warnings/log information provided if operations breach any compliance rules.
+- **Edge Cases:** Simulate slightly off-limit configurations to validate the system reacts diplomatically.
+
+#### Scenario 6: Resource Usage Optimization
+- **Input Values:** Monitor CPU, memory, GPU usage during model operations with varied datasets and pipelines.
+- **Expected Output:** Compute resources are utilized efficiently without wastage but adequately scaled to avoid resource exhaustion.
+- **Edge Cases:** Test how the model reacts under low server privileges/environment settings scenarios.
+
+---
+
+### Notes
+- **Language:** All outputs for tests match the English language used in the Jira user story.
+- **Context:** Tests are created considering a lack of user story description but upon observation of core goals (model integration tasks).
