@@ -1,0 +1,12 @@
+Successful execution of primary functionality with a GET request
+Testing invalid input with a GET request
+Validating edge cases for boundary inputs using a GET request
+Successful execution of a POST request with valid payload
+Testing failure for a POST request with invalid payload
+Updating resource successfully using a PUT request
+Testing resource update failure due to invalid resource ID for PUT
+Deleting a resource successfully using DELETE request
+Deleting non-existing resource using DELETE request
+Validating API response time for GET requests
+Verifying API handles unauthorized access gracefully
+Testing server error scenario
