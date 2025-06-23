@@ -1,0 +1,14 @@
+Verify dropdown contains the new "claude-3-7-sonnet" model
+Validate selection of "claude-3-7-sonnet" in the dropdown
+Ensure proper model validation for "claude-3-7-sonnet"
+API response with 200 OK for valid requests
+API response with 429 Too Many Requests error
+Validate retry mechanism after 429 error
+Handle invalid input for the model API
+Performance testing of the dropdown rendering
+API rate-limiting behavior under load
+Availability and reliability of the service
+Scalability testing for "claude-3-7-sonnet"
+Ensuring error message clarity
+Browser compatibility for dropdown and selection
+Stress test retry mechanism
