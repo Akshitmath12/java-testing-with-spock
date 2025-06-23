@@ -1,0 +1,94 @@
+### **Test Scenarios for User Story: [ZBIO-6545] Add claude-3-7-sonnet Anthropic Model in Google Vertex AI**
+
+### **Functional Test Scenarios**
+
+#### **Dropdown Integration Tests**
+
+- **Test Case 1: Verify the addition of "claude-3-7-sonnet" model in the dropdown**
+  - **Input**: Navigate to the dropdown menu in Google Vertex AI.
+  - **Expected Output**: "claude-3-7-sonnet" should appear as an option in the dropdown list.
+  - **Edge Case**: Ensure correct formatting and spelling of the model name in all supported locales.
+
+- **Test Case 2: Verify model selection functionality**
+  - **Input**: Select "claude-3-7-sonnet" from the dropdown.
+  - **Expected Output**: The system should register the selected model successfully and display it as the active selection in the interface.
+
+- **Test Case 3: Validate that an unsupported model cannot be selected**
+  - **Input**: Attempt to select a model manually outside of the predefined dropdown options using developer tools.
+  - **Expected Output**: The system should reject the selection and show an appropriate error message.
+
+---
+
+#### **API Response Handling**
+
+- **Test Case 4: Ensure successful response for a valid API request**
+  - **Input**: Send a request to API to load "claude-3-7-sonnet" model.
+  - **Expected Output**: The API should return a 200 OK status with the details of the selected model.
+
+- **Test Case 5: Validate handling of "429 Too Many Requests" error**
+  - **Input**: Trigger multiple requests to simulate resource exhaustion and confirm API response.
+  - **Expected Output**: API should return:
+    ```json
+    {
+        "error": {
+            "code": 429,
+            "message": "Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details.",
+            "status": "RESOURCE_EXHAUSTED"
+        }
+    }
+    ```
+    System should gracefully handle the error and display a user-friendly message: "Too many requests. Please retry later."
+
+- **Test Case 6: Validate retry mechanism on receiving a 429 error**
+  - **Input**: Send requests sequentially after simulating a timeout due to resource exhaustion.
+  - **Expected Output**: System should successfully process the subsequent requests after a cooldown period.
+
+---
+
+#### **Edge Case Tests**
+
+- **Test Case 7: Validate dropdown behavior when no models are available**
+  - **Input**: Configure the dropdown to return an empty list.
+  - **Expected Output**: System should display a message indicating: "No models available."
+
+- **Test Case 8: Test response with corrupted model data**
+  - **Input**: Send API a request that includes corrupted data for "claude-3-7-sonnet."
+  - **Expected Output**: System should return a specific descriptive error message pointing to data inconsistency.
+
+---
+
+### **Non-Functional Test Scenarios**
+
+#### **Performance Testing**
+
+- **Test Case 9: Measure system response time for model dropdown rendering**
+  - **Input**: Load a large number of models in the dropdown (including "claude-3-7-sonnet").
+  - **Expected Output**: Dropdown menu should populate within <2 seconds.
+
+- **Test Case 10: Test system behavior under high API traffic**
+  - **Input**: Simulate concurrent API requests from 1000+ users selecting different models.
+  - **Expected Output**: API should handle requests efficiently without crashing, ensuring consistent <2-second response time.
+
+---
+
+#### **Usability Testing**
+
+- **Test Case 11: User interface clarity for selecting "claude-3-7-sonnet"**
+  - **Input**: Observe dropdown for accessibility (text readability, keyboard navigation, accessible for screen readers).
+  - **Expected Output**: Dropdown and model selection functionality should be accessible without errors for all usability features.
+
+---
+
+#### **Reliability Testing**
+
+- **Test Case 12: Ensure stability of "claude-3-7-sonnet" selection under continuous usage**
+  - **Input**: Continuously select and deselect "claude-3-7-sonnet" model for 5 minutes in stress testing.
+  - **Expected Output**: The system should reliably register each action without glitches.
+
+- **Test Case 13: Validate at peak resource usage**
+  - **Input**: Simulate selection of "claude-3-7-sonnet" while the system is under maximum resource load.
+  - **Expected Output**: System should remain stable, and dropdown functionality should continue to work seamlessly.
+
+---
+
+Fine-grained testing according to above scenarios will ensure functional correctness, API reliability, and user-friendly integration of "claude-3-7-sonnet" in Google Vertex AI.

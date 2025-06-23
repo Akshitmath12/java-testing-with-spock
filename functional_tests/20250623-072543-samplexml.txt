@@ -1,0 +1,121 @@
+## Test Scenarios for [ZBIO-6159]: Roostgpt change for upload of Jira ticket as PDF for Functional Test 
+
+---
+
+### **Functional Test Cases**  
+
+#### **Scenario 1**: File Upload Functionality for Supported Document Type  
+- **Input Values**:  
+  - Upload a PDF file named `jira_ticket.pdf`.  
+  - File content contains typical Jira details (title, description, comments).  
+- **Expected Output**:  
+  - The system should successfully upload the PDF file as part of a functional test.  
+  - System should validate that the file type is supported (PDF).  
+- **Edge Case**:  
+  - Try uploading unsupported file types (e.g., `.jpg` or `.docx`).  
+  - Expected Output: Validation message: "Unsupported file type. Only PDF files are currently allowed."  
+
+---
+
+#### **Scenario 2**: File Storage in Roost-Reg  
+- **Input Values**:  
+  - Upload a valid PDF file named `jira_ticket.pdf`.  
+- **Expected Output**:  
+  - File path, file name, and prompt type are successfully stored in the `roost-reg`.  
+
+---
+
+#### **Scenario 3**: Data Transmission to AI Server  
+- **Input Values**:  
+  - Send the uploaded file data (file content, file name) and prompt type to the AI Server.  
+- **Expected Output**:  
+  - AI Server should receive the correct file paths as a string, fetch file content and prompt type, and process them without errors.  
+
+---
+
+#### **Scenario 4**: PDF Parsing for Jira Ticket Details  
+- **Input Values**:  
+  - Parse the PDF file `jira_ticket.pdf` for details such as title, description, and comments using a regex-based approach.  
+- **Expected Output**:  
+  - Regex should correctly extract title, description, and comments.  
+  - Example Output:  
+    - **Title**: ZBIO-6159  
+    - **Description**: Jira ticket upload as PDF for functional testing.  
+    - **Comments**: Flow involves approostio -> roost-reg -> ai server -> node.js implementation.  
+
+---
+
+#### **Scenario 5**: Handling Large File Upload  
+- **Input Values**:  
+  - Upload a large PDF file exceeding 10MB.  
+- **Expected Output**:  
+  - System should reject the upload with a validation message: "File size exceeds the maximum limit of 10MB."  
+
+---
+
+#### **Scenario 6**: Handling Empty File Upload  
+- **Input Values**:  
+  - Upload an empty PDF file with 0 bytes.  
+- **Expected Output**:  
+  - System should reject the upload with a validation message: "Uploaded file cannot be empty."  
+
+---
+
+### **Non-Functional Test Cases**  
+
+#### **Scenario 1**: Performance of File Upload Process  
+- **Input Values**:  
+  - Upload 100 valid Jira PDF files in sequence.  
+- **Expected Output**:  
+  - System should process and store all files within acceptable time limits (<1 second per file).  
+
+---
+
+#### **Scenario 2**: System Reliability Under Concurrent Uploads  
+- **Input Values**:  
+  - Simulate concurrent uploads of 50 valid PDF files from different users.  
+- **Expected Output**:  
+  - System should handle all uploads without crashing and maintain data integrity.  
+
+---
+
+#### **Scenario 3**: Scalability Testing  
+- **Input Values**:  
+  - Increase the number of uploads gradually from 50 to 1000 to test system limits.  
+- **Expected Output**:  
+  - System should scale gracefully, maintaining consistent response times and successfully handling increased file uploads.  
+
+---
+
+#### **Scenario 4**: Security of File Data  
+- **Input Values**:  
+  - Attempt unauthorized access to file paths in the `roost-reg` storage.  
+- **Expected Output**:  
+  - System should deny access and log the activity.  
+
+---
+
+#### **Scenario 5**: Validating Regex Efficiency for PDF Parsing  
+- **Input Values**:  
+  - Process a complex PDF file with multiple Jira tickets having nested comments and irregular formatting.  
+- **Expected Output**:  
+  - Regex should parse details within acceptable time limits (<5 seconds) and maintain 95%-100% accuracy.  
+
+---
+
+#### **Scenario 6**: Usability of Alternative Option for Functional Test  
+- **Input Values**:  
+  - Provide an alternative option for functional test users to upload PDF instead of linking Jira or Azure DevOps (UI testing).  
+- **Expected Output**:  
+  - Users should find the new option visible, intuitive, and functional.  
+  - Option should not interfere with existing workflows.  
+
+---
+
+### **Edge Cases Summary**  
+1. Unsupported file types (e.g., `.jpg`, `.docx`).  
+2. Oversized files (>10MB).  
+3. Empty files (0 bytes).  
+4. Complex PDF structure with multiple nested comments.  
+5. Simultaneous uploads from multiple users.  
+
